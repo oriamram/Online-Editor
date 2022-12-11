@@ -11,13 +11,20 @@ class dbManager {
 		this.codeBlock = mongoose.model("code-blocks", codeBlockSchema);
 	}
 
-	async addCodeBlock() {
-		await this.codeBlock.create({
-			title: "async func",
-			initialCode: `function test(){
-				let a = 1
-			}`,
-		});
+	async addCodeBlock({ title, initialCode }) {
+		try {
+			await this.codeBlock.create({
+				title,
+				initialCode,
+				changedCode: initialCode,
+			});
+		} catch (e) {
+			console.log("cant add that to database");
+		}
+	}
+
+	async getCodeBlock(title) {
+		return await this.codeBlock.findOne({ title });
 	}
 }
 

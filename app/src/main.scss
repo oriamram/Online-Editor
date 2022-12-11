@@ -1,0 +1,22 @@
+@mixin size($width, $height: unset) {
+	width: $width;
+	height: $height;
+}
+@mixin position($top, $left: unset) {
+	top: $top;
+	left: $left;
+}
+
+$bg-theme: #7c818c;
+$codeBlock-theme: #4c5265;
+$font-family: "Kanit", sans-serif;
+
+body {
+	margin: 0;
+	background: $bg-theme;
+	font-family: $font-family;
+}
+
+h1 {
+	margin: 0;
+}

@@ -1,11 +1,8 @@
 import React from "react";
+import "./styles/codeBlock.scss";
 
 const CodeBlock = () => {
-	return (
-		<div className="CodeBlock">
-			<button>CodeBlock</button>
-		</div>
-	);
+	return <button className="CodeBlock">CodeBlock</button>;
 };
 
 export default CodeBlock;
