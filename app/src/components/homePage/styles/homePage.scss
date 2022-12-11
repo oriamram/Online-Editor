@@ -1,11 +1,13 @@
 @import "../../../main.scss";
 
-.App {
+.HomePage {
 	@include size(100vw, 100vh);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
 	.codeBlocks-container {
+		@include size(100%);
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-around;
@@ -17,7 +19,7 @@
 }
 
 @media only screen and (max-width: 700px) {
-	.App {
+	.HomePage {
 		.web-title {
 			font-size: 3rem;
 			font-weight: 400;
@@ -26,7 +28,7 @@
 }
 
 @media only screen and (max-width: 500px) {
-	.App {
+	.HomePage {
 		.web-title {
 			font-size: 2rem;
 			font-weight: 400;

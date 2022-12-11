@@ -16,12 +16,17 @@ app.get("/", async (req, res) => {
 });
 
 //gets a body with {title:`...`} and returns the document
-app.get("/get_code_block", async (req, res) => {
-	res.send(await db.getCodeBlock(req.body.title));
+app.get("/get_codeBlock", async (req, res) => {
+	res.send(await db.getCodeBlock(req.query.title));
+});
+
+//returns all code blocks
+app.get("/get_all_codeBlocks", async (req, res) => {
+	res.send(await db.getAllCodeBlocks());
 });
 
 //gets a body with {title , initialCode} and add to database
-app.post("/add_code_block", async (req, res) => {
+app.post("/add_codeBlock", async (req, res) => {
 	await db.addCodeBlock({ title: req.body.title, initialCode: req.body.initialCode });
 	res.sendStatus(204);
 });

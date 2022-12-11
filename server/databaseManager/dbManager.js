@@ -23,6 +23,10 @@ class dbManager {
 		}
 	}
 
+	async getAllCodeBlocks() {
+		return await this.codeBlock.find();
+	}
+
 	async getCodeBlock(title) {
 		return await this.codeBlock.findOne({ title });
 	}

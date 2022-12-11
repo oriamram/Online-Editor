@@ -1,27 +1,36 @@
 @import "../../../main.scss";
 
-.CodeBlock {
+.CodeBlockOption {
 	@include size(35vw, 35vh);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin-top: 5vh;
 	background: $codeBlock-theme;
 	border: none;
 	border-radius: 6px;
 	transition: 0.3s;
-	font-size: 2.5rem;
+	font-size: 3.5rem;
 	&:hover {
 		cursor: pointer;
 		background: #40445a;
 	}
 }
 
+@media only screen and (max-width: 900px) {
+	.CodeBlockOption {
+		font-size: 3rem;
+	}
+}
+
 @media only screen and (max-width: 700px) {
-	.CodeBlock {
-		font-size: 2rem;
+	.CodeBlockOption {
+		font-size: 2.5rem;
 	}
 }
 
 @media only screen and (max-width: 500px) {
-	.CodeBlock {
-		font-size: 1rem;
+	.CodeBlockOption {
+		font-size: 1.5rem;
 	}
 }
