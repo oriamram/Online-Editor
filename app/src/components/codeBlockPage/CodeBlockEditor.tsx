@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import axios from "axios";
+import { socketContext } from "../App";
 import "./styles/codeBlockEditor.scss";
 
 interface codeBlockType {
@@ -17,7 +17,8 @@ interface codeBlockEditor {
 const CodeBlockEditor = ({ title }: codeBlockEditor) => {
 	const [codeBlock, setCodeBlock] = useState<codeBlockType>();
 	const [editorValue, setEditorValue] = useState<string | undefined>();
-
+	const socket = useContext(socketContext);
+	const codeEditorRef = useRef<HTMLTextAreaElement>(null);
 	//request the relevant code block from server
 	const getRelevantCodeBlock = async () => {
 		setCodeBlock(
@@ -33,14 +34,18 @@ const CodeBlockEditor = ({ title }: codeBlockEditor) => {
 
 	useEffect(() => {
 		getRelevantCodeBlock();
+		socket.on("changedCode", (changedCode) => {
+			setEditorValue(changedCode);
+		});
 	}, []);
 
 	useEffect(() => {
 		setEditorValue(codeBlock ? codeBlock.changedCode : "!$loadingState");
 	}, [codeBlock]);
 
-	const onChange = (e: string) => {
-		setEditorValue(e);
+	const onChange = () => {
+		setEditorValue(codeEditorRef.current?.value);
+		socket.emit("changeInEditor", title, codeEditorRef.current?.value);
 	};
 
 	return (
@@ -49,9 +54,10 @@ const CodeBlockEditor = ({ title }: codeBlockEditor) => {
 				<div className="loader"></div>
 			) : (
 				<CodeEditor
+					ref={codeEditorRef}
 					value={editorValue}
-					onChange={(e) => {
-						onChange(e.currentTarget.value);
+					onChange={() => {
+						onChange();
 					}}
 					language="js"
 					style={{

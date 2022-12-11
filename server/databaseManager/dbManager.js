@@ -30,6 +30,15 @@ class dbManager {
 	async getCodeBlock(title) {
 		return await this.codeBlock.findOne({ title });
 	}
+
+	async updateCodeBlock(title, changedCode) {
+		try {
+			await this.codeBlock.updateOne({ title }, { changedCode });
+			return 204;
+		} catch (e) {
+			return 404;
+		}
+	}
 }
 
 const db = new dbManager();
