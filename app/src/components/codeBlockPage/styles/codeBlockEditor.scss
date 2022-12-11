@@ -1,0 +1,36 @@
+@import "../../../main.scss";
+
+.w-tc-editor {
+	@include size(70vw, 80vh);
+	background: $editor-theme;
+}
+.CodeBlockEditor {
+	padding: 15px;
+	background: $editor-theme;
+}
+
+.keyword {
+	// color: rgb(0, 172, 0) !important;
+	color: rgb(116, 0, 0) !important;
+}
+.punctuation {
+	color: rgb(151, 151, 0) !important;
+}
+.function {
+	color: rgb(0, 0, 122) !important;
+}
+.operator {
+	color: rgb(0, 0, 182) !important;
+}
+.string {
+	color: rgb(0, 170, 170) !important;
+}
+.literal-property {
+	color: rgb(126, 0, 0) !important;
+}
+.number {
+	color: rgb(18, 192, 192) !important;
+}
+.boolean {
+	color: rgb(197, 128, 0) !important;
+}

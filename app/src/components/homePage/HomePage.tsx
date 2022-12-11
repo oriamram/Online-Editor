@@ -21,7 +21,7 @@ const HomePage = () => {
 	return (
 		<div className="HomePage">
 			<h1 className="web-title">Choose Code Block</h1>
-			<div className="codeBlocks-container">{renderCodeBlockOptions()}</div>
+			{allCodeBlocks.length >= 1 ? <div className="codeBlocks-container">{renderCodeBlockOptions()}</div> : <div className="loader"></div>}
 		</div>
 	);
 };
