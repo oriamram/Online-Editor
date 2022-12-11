@@ -1,24 +1,23 @@
 const mongoose = require("mongoose");
-const { userSchema } = require("./schemas");
+const { codeBlockSchema } = require("./schemas");
+
+const URI = `mongodb+srv://user:123@mongoprojects.eaei3e7.mongodb.net/online-editor?retryWrites=true&w=majority`;
 
 class dbManager {
 	constructor() {
-		mongoose.connect(process.env.DB_URL || "mongodb://mongo:27017/users", async () => {
+		mongoose.connect(process.env.DB_URL || URI, async () => {
 			console.log("connected to db");
 		});
-		this.userModel = mongoose.model("users", userSchema);
+		this.codeBlock = mongoose.model("code-blocks", codeBlockSchema);
 	}
 
-	async addUser() {
-		const newUser = await this.userModel.create({
-			name: "ori",
-			age: 21,
+	async addCodeBlock() {
+		await this.codeBlock.create({
+			title: "async func",
+			initialCode: `function test(){
+				let a = 1
+			}`,
 		});
-		console.log(newUser);
-	}
-
-	async getAllUsers() {
-		return await this.userModel.find({});
 	}
 }
 

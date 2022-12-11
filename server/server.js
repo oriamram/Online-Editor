@@ -12,16 +12,8 @@ app.use(json());
 const db = new dbManager();
 
 app.get("/", async (req, res) => {
+	db.addCodeBlock();
 	res.send("server");
-});
-
-app.get("/add", async (req, res) => {
-	await db.addUser();
-	res.send("added");
-});
-
-app.get("/get", async (req, res) => {
-	res.send(await db.getAllUsers());
 });
 
 app.listen(PORT, () => {

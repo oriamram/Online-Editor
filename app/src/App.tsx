@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+import CodeBlock from "./components/codeBlock/CodeBlock";
 
 const App = () => {
-	const [a, b] = useState();
-	return <div className="App"></div>;
+	return (
+		<div className="App">
+			<h1>Choose Code Block</h1>
+			<CodeBlock />
+			<CodeBlock />
+			<CodeBlock />
+			<CodeBlock />
+		</div>
+	);
 };
 
 export default App;

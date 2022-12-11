@@ -1,8 +1,8 @@
 const { Schema } = require("mongoose");
 
-const userSchema = new Schema({
-	name: String,
-	age: Number,
+const codeBlockSchema = new Schema({
+	title: String,
+	initialCode: String,
 });
 
-module.exports = { userSchema };
+module.exports = { codeBlockSchema };
