@@ -32,4 +32,6 @@ class dbManager {
 	}
 }
 
-module.exports = dbManager;
+const db = new dbManager();
+
+module.exports = db;

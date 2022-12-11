@@ -10,8 +10,11 @@ interface codeBlockType {
 	changedCode: string;
 }
 
-const CodeBlockEditor = () => {
-	const { title } = useParams();
+interface codeBlockEditor {
+	title: string;
+}
+
+const CodeBlockEditor = ({ title }: codeBlockEditor) => {
 	const [codeBlock, setCodeBlock] = useState<codeBlockType>();
 	const [editorValue, setEditorValue] = useState<string | undefined>();
 

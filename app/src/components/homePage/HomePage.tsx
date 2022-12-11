@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { socketContext } from "../App";
 import CodeBlockOption from "../codeBlockOption/CodeBlockOption";
 import "./styles/homePage.scss";
 
 const HomePage = () => {
 	const [allCodeBlocks, setAllCodeBlocks] = useState([]);
+	const socket = useContext(socketContext);
 
 	const getAllCodeBlocks = async () => {
 		setAllCodeBlocks(await (await axios.get("/get_all_codeBlocks")).data);
@@ -16,6 +18,7 @@ const HomePage = () => {
 
 	useEffect(() => {
 		getAllCodeBlocks();
+		socket.emit("backAtHome", localStorage.getItem("lastCodeBlock"));
 	}, []);
 
 	return (
