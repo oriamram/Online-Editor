@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useLayoutEffect, useContext } from "react";
+import { useEffect, useState, useLayoutEffect, useContext } from "react";
 import axios from "axios";
 import hljs from "highlight.js";
 import { socketContext } from "../App";
-
 import "./styles/codeBlockMentor.scss";
 
 interface codeBlockType {
 	title: string;
 	initialCode: string;
 	changedCode: string;
+	solutionCode: string;
 }
 
 interface codeBlockMentorProps {
@@ -18,12 +18,15 @@ interface codeBlockMentorProps {
 const CodeBlockMentor = ({ title }: codeBlockMentorProps) => {
 	const [codeBlock, setCodeBlock] = useState<codeBlockType>();
 	const [displayValue, setDisplayValue] = useState<string>();
+	// const [correctSolution, setCorrectSolution] = useState<boolean>(false);
 	const socket = useContext(socketContext);
 
+	//highlight.js
 	useLayoutEffect(() => {
 		hljs.highlightAll();
 	});
 
+	//chagne displayed code accordingly to changes other users make
 	useEffect(() => {
 		getRelevantCodeBlock();
 		socket.on("changedCode", (changedCode) => {
@@ -34,6 +37,13 @@ const CodeBlockMentor = ({ title }: codeBlockMentorProps) => {
 	useEffect(() => {
 		setDisplayValue(codeBlock ? codeBlock.changedCode : "!$loadingState");
 	}, [codeBlock]);
+
+	//check for currect answer
+	useEffect(() => {
+		if (displayValue && displayValue === codeBlock?.solutionCode) {
+			alert("Success!!");
+		}
+	});
 
 	//request the relevant code block from server
 	const getRelevantCodeBlock = async () => {
@@ -52,7 +62,7 @@ const CodeBlockMentor = ({ title }: codeBlockMentorProps) => {
 		<div className="code">
 			<div className="CodeBlockMentor">
 				{displayValue === "!$loadingState" ? (
-					<div className="loader"></div>
+					<div className="loader codeBlockPage"></div>
 				) : (
 					<pre>
 						<code className="language-javascript">{displayValue}</code>

@@ -7,29 +7,30 @@ const { io } = require("./socket");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors({ origin: ["http://localhost:3000", "http://localhost:4545"] }));
+app.use(cors({ origin: "*" }));
 app.use(json());
 
 app.get("/", async (req, res) => {
 	res.send("server");
 });
 
-//gets a body with {title:`...`} and returns the document
+//response with relevant codeBlock object
 app.get("/get_codeBlock", async (req, res) => {
 	res.send(await db.getCodeBlock(req.query.title));
 });
 
-//returns all code blocks
+//response with all codeBlock objects
 app.get("/get_all_codeBlocks", async (req, res) => {
 	res.send(await db.getAllCodeBlocks());
 });
 
-//gets a body with {title , initialCode} and add to database
+//add codeBlock to database
 app.post("/add_codeBlock", async (req, res) => {
-	await db.addCodeBlock({ title: req.body.title, initialCode: req.body.initialCode });
+	await db.addCodeBlock({ title: req.body.title, initialCode: req.body.initialCode, solutionCode: req.body.solutionCode });
 	res.sendStatus(204);
 });
 
+//update a codeBlock's changedBody
 app.put("/update_codeBlock", async (req, res) => {
 	res.sendStatus(await db.updateCodeBlock(req.body.title, req.body.changedCode));
 });

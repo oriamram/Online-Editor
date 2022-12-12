@@ -3,9 +3,10 @@
 .w-tc-editor {
 	@include size(70vw, 80vh);
 	min-width: 250px;
-	min-height: 600px;
+	min-height: 520px;
 	background: $editor-theme;
-	border-top: 2px $bg-theme solid;
+	font-family: monospace !important;
+	color: #9cdcfe;
 }
 
 .rstBtn {
@@ -22,40 +23,60 @@
 	}
 }
 
+.smiley {
+	@include size(70vw, 80vh);
+	font-size: 20rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 5vw;
+	min-width: 250px;
+	min-height: 600px;
+}
+
 .CodeBlockEditor {
 	@include size(75vw, 83vh);
 	display: flex;
 	position: relative;
 	min-width: 300px;
-	min-height: 620px;
+	min-height: 540px;
 	align-items: center;
 	padding-left: 0.5vw;
 	background: $editor-theme;
 }
 
 .keyword {
-	color: rgb(116, 0, 0) !important;
+	color: #569cd6 !important;
+}
+.comment {
+	color: #6a9955 !important;
 }
 .punctuation {
-	color: rgb(151, 151, 0) !important;
+	color: #9cdcfe !important;
 }
 .function {
-	color: rgb(0, 0, 122) !important;
+	color: #dcdcaa !important;
 }
 .operator {
-	color: rgb(0, 0, 182) !important;
+	color: #d4d4d4 !important;
 }
 .string {
-	color: rgb(0, 170, 170) !important;
+	color: #c39178 !important;
+}
+.parameter {
+	color: #9cdcfe;
 }
 .literal-property {
 	color: rgb(126, 0, 0) !important;
 }
 .number {
-	color: rgb(18, 192, 192) !important;
+	color: #b5cea8 !important;
 }
 .boolean {
-	color: rgb(197, 128, 0) !important;
+	color: #b5cea8 !important;
+}
+.class-name {
+	color: #dcdcaa !important;
 }
 
 @media only screen and (max-width: 1400px) {
@@ -74,10 +95,16 @@
 		margin-left: 3%;
 	}
 	.CodeBlockEditor {
-		@include size(90vw, 95vh);
+		@include size(90vw, 90vh);
+		overflow-x: hidden;
 	}
 	.w-tc-editor {
 		@include size(80vw, 87vh);
+		font-size: 1rem !important;
+	}
+	.smiley {
+		@include size(80vw, 87vh);
+		font-size: 15rem;
 	}
 }
 @media only screen and (max-width: 500px) {

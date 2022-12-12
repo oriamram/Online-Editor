@@ -7,13 +7,9 @@ interface codeBlockOptionProps {
 }
 
 const CodeBlockOption = ({ title }: codeBlockOptionProps) => {
-	const onClick = () => {
-		console.log(title);
-	};
-
 	return (
-		<NavLink to={`/${title}`} className="CodeBlockOption" onClick={onClick}>
-			{title.replace("_", " ")}
+		<NavLink to={`/${title}`} className="CodeBlockOption">
+			{title.replaceAll("_", " ")}
 		</NavLink>
 	);
 };

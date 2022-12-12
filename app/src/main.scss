@@ -7,15 +7,18 @@
 	left: $left;
 }
 
-$bg-theme: #9095a1;
-$codeBlock-theme: #4c5265;
+$bg-theme: #323233;
+$codeBlock-theme: #434857;
 $font-family: "Kanit", sans-serif;
-$editor-theme: #585d6e;
+$editor-theme: #1e1e1e;
+$white: #d4d4d4;
 
 body {
 	margin: 0;
 	background: $bg-theme;
 	font-family: $font-family;
+	caret-color: $white;
+	color: $white;
 }
 
 .App {
@@ -35,10 +38,10 @@ a {
 	border-top: 20px solid #3498db;
 	width: 250px;
 	height: 250px;
-	-webkit-animation: spin 2s linear infinite; /* Safari */
+	-webkit-animation: spin 2s linear infinite;
 	animation: spin 2s linear infinite;
 }
-/* Safari */
+
 @-webkit-keyframes spin {
 	0% {
 		-webkit-transform: rotate(0deg);
@@ -67,4 +70,12 @@ a {
 
 ::-webkit-scrollbar-thumb {
 	background: $codeBlock-theme;
+}
+@media only screen and (max-width: 700px) {
+	.loader {
+		width: 150px;
+		height: 150px;
+		border: 10px solid #dfdfdf;
+		border-top: 10px solid #3498db;
+	}
 }

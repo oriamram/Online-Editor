@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { socketContext } from "../App";
 import CodeBlockEditor from "./CodeBlockEditor";
 import CodeBlockMentor from "./CodeBlockMentor";
-import { socketContext } from "../App";
 import "./styles/codeBlockPage.scss";
 
 const CodeBlockPage = () => {
@@ -11,8 +11,9 @@ const CodeBlockPage = () => {
 	const [spectators, setSpectators] = useState<number>(0);
 	const [isFirst, setIsFirst] = useState(false);
 
+	//get spectators count and tell server current page
 	useEffect(() => {
-		socket.emit("connectedToCodeBlock", title);
+		socket.emit("connectedToCodeBlockPage", title);
 		socket.on("spectatorsCount", (spectatorsCount) => {
 			setSpectators(spectatorsCount);
 			if (spectatorsCount < 2) {
@@ -24,9 +25,9 @@ const CodeBlockPage = () => {
 
 	return (
 		<div className="CodeBlockPage">
-			<h1 className="title">{title?.replace("_", " ")}</h1>
+			<h1 className="title">{title?.replaceAll("_", " ")}</h1>
 			{!isFirst ? <CodeBlockEditor title={title!} /> : <CodeBlockMentor title={title!} />}
-			<h1 className="spectators">spectators: {spectators}</h1>
+			<h1 className="spectators">Spectators: {spectators}</h1>
 		</div>
 	);
 };

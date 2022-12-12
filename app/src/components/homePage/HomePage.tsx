@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { socketContext } from "../App";
 import CodeBlockOption from "../codeBlockOption/CodeBlockOption";
@@ -12,13 +12,14 @@ const HomePage = () => {
 		setAllCodeBlocks(await (await axios.get("/get_all_codeBlocks")).data);
 	};
 
+	//render all codeBlocks options
 	const renderCodeBlockOptions = () => {
 		return allCodeBlocks.map(({ title }: { title: string }) => <CodeBlockOption key={title} title={title} />);
 	};
 
 	useEffect(() => {
 		getAllCodeBlocks();
-		socket.emit("backAtHome", localStorage.getItem("lastCodeBlock"));
+		socket.emit("backAtHome", localStorage.getItem("lastCodeBlock")); //tell the server current page + last page
 	}, []);
 
 	return (

@@ -4,20 +4,26 @@
 	@include size(35vw, 35vh);
 	display: flex;
 	justify-content: center;
+	min-width: 150px;
+	min-height: 250px;
 	align-items: center;
+	text-align: center;
 	margin-top: 5vh;
 	background: $codeBlock-theme;
 	border: none;
 	border-radius: 6px;
 	transition: 0.3s;
 	font-size: 3.5rem;
+	box-shadow: 2px 3px 7px black;
+	text-transform: capitalize;
+	color: $white;
 	&:hover {
 		cursor: pointer;
 		background: #40445a;
 	}
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1000px) {
 	.CodeBlockOption {
 		font-size: 3rem;
 	}
@@ -29,7 +35,7 @@
 	}
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
 	.CodeBlockOption {
 		font-size: 1.5rem;
 	}

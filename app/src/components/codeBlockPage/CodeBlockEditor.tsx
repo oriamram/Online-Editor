@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import axios from "axios";
-import { FcRefresh } from "react-icons/fc";
 import { socketContext } from "../App";
+import { FcRefresh } from "react-icons/fc";
+import { AiOutlineSmile } from "react-icons/ai";
 import "./styles/codeBlockEditor.scss";
 
 interface codeBlockType {
 	title: string;
 	initialCode: string;
 	changedCode: string;
+	solutionCode: string;
 }
 
 interface codeBlockEditorProps {
@@ -18,6 +20,7 @@ interface codeBlockEditorProps {
 const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 	const [codeBlock, setCodeBlock] = useState<codeBlockType>();
 	const [editorValue, setEditorValue] = useState<string | undefined>();
+	const [correctSolution, setCorrectSolution] = useState<boolean>(false);
 	const socket = useContext(socketContext);
 	const codeEditorRef = useRef<HTMLTextAreaElement>(null);
 
@@ -34,6 +37,7 @@ const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 		);
 	};
 
+	//chagne displayed code accordingly to changes other users make
 	useEffect(() => {
 		getRelevantCodeBlock();
 		socket.on("changedCode", (changedCode) => {
@@ -45,32 +49,52 @@ const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 		setEditorValue(codeBlock ? codeBlock.changedCode : "!$loadingState");
 	}, [codeBlock]);
 
+	//when user changes editors content, send changes to all other users currently in that page
 	const onChange = (value: string) => {
 		setEditorValue(value);
 		socket.emit("changeInEditor", title, value);
 	};
 
+	//check for currect answer
+	useEffect(() => {
+		if (editorValue && editorValue === codeBlock?.solutionCode) {
+			setCorrectSolution(true);
+		}
+	});
+
 	return (
 		<div className="code">
 			<div className="CodeBlockEditor">
 				{editorValue === "!$loadingState" ? (
-					<div className="loader"></div>
+					<div className="loader codeBlockPage"></div>
 				) : (
 					<>
-						<CodeEditor
-							ref={codeEditorRef}
-							value={editorValue}
-							onChange={() => {
-								onChange(codeEditorRef.current?.value!);
+						{correctSolution ? (
+							<div className="smiley">
+								<AiOutlineSmile />
+							</div>
+						) : (
+							<CodeEditor
+								ref={codeEditorRef}
+								value={editorValue}
+								onChange={() => {
+									onChange(codeEditorRef.current?.value!);
+								}}
+								language="js"
+								style={{
+									fontSize: 23,
+									fontFamily: "Righteous, cursive",
+									overflowY: "scroll",
+								}}
+							/>
+						)}
+						<button
+							className="rstBtn"
+							onClick={() => {
+								setCorrectSolution(false);
+								onChange(codeBlock?.initialCode!);
 							}}
-							language="js"
-							style={{
-								fontSize: 23,
-								fontFamily: "Righteous, cursive",
-								overflowY: "scroll",
-							}}
-						/>
-						<button className="rstBtn" onClick={() => onChange(codeBlock?.initialCode!)}>
+						>
 							<FcRefresh />
 						</button>
 					</>

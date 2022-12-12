@@ -1,36 +1,40 @@
 const mongoose = require("mongoose");
 const { codeBlockSchema } = require("./schemas");
-
-const URI = `mongodb+srv://user:123@mongoprojects.eaei3e7.mongodb.net/online-editor?retryWrites=true&w=majority`;
+require("dotenv").config({ path: "../.env" });
 
 class dbManager {
 	constructor() {
-		mongoose.connect(process.env.DB_URL || URI, async () => {
+		mongoose.connect(process.env.DB_URI, async () => {
 			console.log("connected to db");
 		});
 		this.codeBlock = mongoose.model("code-blocks", codeBlockSchema);
 	}
 
-	async addCodeBlock({ title, initialCode }) {
+	//add a new codeBlock
+	async addCodeBlock({ title, initialCode, solutionCode }) {
 		try {
 			await this.codeBlock.create({
 				title,
 				initialCode,
 				changedCode: initialCode,
+				solutionCode,
 			});
 		} catch (e) {
 			console.log("cant add that to database");
 		}
 	}
 
+	//returns all codeBlocks
 	async getAllCodeBlocks() {
 		return await this.codeBlock.find();
 	}
 
+	//returns a specific codeBlock
 	async getCodeBlock(title) {
 		return await this.codeBlock.findOne({ title });
 	}
 
+	//updates a codeBlock 'changesCode'
 	async updateCodeBlock(title, changedCode) {
 		try {
 			await this.codeBlock.updateOne({ title }, { changedCode });

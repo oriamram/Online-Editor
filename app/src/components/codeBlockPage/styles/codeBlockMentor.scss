@@ -11,6 +11,12 @@
 	padding: 0.5em;
 	background: $editor-theme;
 	font-size: 23px;
+	color: #9cdcfe !important;
+	span {
+		white-space: initial;
+	}
+	min-width: 250px;
+	min-height: 520px;
 }
 
 .hljs-built_in,
@@ -19,9 +25,11 @@
 .hljs-link {
 	color: #8be9fd;
 }
-
+.hljs-params {
+	color: #9cdcfe;
+}
 .hljs-keyword {
-	color: #ff79c6;
+	color: #569cd6 !important;
 }
 
 .hljs,
@@ -32,8 +40,7 @@
 .hljs-title,
 .hljs-attr,
 .hljs-meta-keyword {
-	font-style: italic;
-	color: #50fa7b;
+	color: #dcdcaa;
 }
 
 .hljs-string,
@@ -46,13 +53,13 @@
 .hljs-variable,
 .hljs-template-tag,
 .hljs-template-variable {
-	color: #f1fa8c;
+	color: #c39178;
 }
 
 .hljs-comment,
 .hljs-quote,
 .hljs-deletion {
-	color: #6272a4;
+	color: #6a9955;
 }
 
 .hljs-keyword,
@@ -65,11 +72,12 @@
 .hljs-name,
 .hljs-strong {
 	font-weight: bold;
+	color: #dcdcaa;
 }
 
 .hljs-literal,
 .hljs-number {
-	color: #bd93f9;
+	color: #b5cea8;
 }
 
 .hljs-emphasis {
@@ -81,8 +89,28 @@
 	display: flex;
 	position: relative;
 	min-width: 300px;
-	min-height: 620px;
+	min-height: 540px;
 	align-items: center;
 	padding-left: 0.5vw;
 	background: $editor-theme;
+}
+
+@media only screen and (max-width: 900px) {
+	.CodeBlockMentor {
+		@include size(90vw, 90vh);
+		overflow-x: hidden;
+	}
+	.hljs {
+		@include size(80vw, 87vh);
+		font-size: 0.8rem !important;
+	}
+	.smiley {
+		@include size(80vw, 87vh);
+		font-size: 15rem;
+	}
+}
+@media only screen and (max-width: 600px) {
+	.title {
+		font-size: 1.3rem !important;
+	}
 }
