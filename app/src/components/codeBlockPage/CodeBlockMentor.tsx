@@ -49,14 +49,16 @@ const CodeBlockMentor = ({ title }: codeBlockMentorProps) => {
 	};
 
 	return (
-		<div className="CodeBlockMentor">
-			{displayValue === "!$loadingState" ? (
-				<div className="loader"></div>
-			) : (
-				<pre>
-					<code className="language-javascript">{displayValue}</code>
-				</pre>
-			)}
+		<div className="code">
+			<div className="CodeBlockMentor">
+				{displayValue === "!$loadingState" ? (
+					<div className="loader"></div>
+				) : (
+					<pre>
+						<code className="language-javascript">{displayValue}</code>
+					</pre>
+				)}
+			</div>
 		</div>
 	);
 };

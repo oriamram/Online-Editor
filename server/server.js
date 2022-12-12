@@ -2,6 +2,7 @@ const express = require("express");
 const { json } = require("body-parser");
 const cors = require("cors");
 const db = require("./databaseManager/dbManager");
+const { io } = require("./socket");
 
 const app = express();
 const PORT = process.env.PORT || 4000;

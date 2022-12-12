@@ -37,3 +37,5 @@ io.on("connection", (socket) => {
 function countSpectators(io, users, room) {
 	io.to(room).emit("spectatorsCount", Object.values(users).filter((currentRoom) => currentRoom === room).length);
 }
+
+module.exports = { io };

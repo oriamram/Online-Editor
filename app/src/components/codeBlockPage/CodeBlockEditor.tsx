@@ -51,29 +51,31 @@ const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 	};
 
 	return (
-		<div className="CodeBlockEditor">
-			{editorValue === "!$loadingState" ? (
-				<div className="loader"></div>
-			) : (
-				<>
-					<CodeEditor
-						ref={codeEditorRef}
-						value={editorValue}
-						onChange={() => {
-							onChange(codeEditorRef.current?.value!);
-						}}
-						language="js"
-						style={{
-							fontSize: 23,
-							fontFamily: "Righteous, cursive",
-							overflowY: "scroll",
-						}}
-					/>
-					<button className="rstBtn" onClick={() => onChange(codeBlock?.initialCode!)}>
-						<FcRefresh />
-					</button>
-				</>
-			)}
+		<div className="code">
+			<div className="CodeBlockEditor">
+				{editorValue === "!$loadingState" ? (
+					<div className="loader"></div>
+				) : (
+					<>
+						<CodeEditor
+							ref={codeEditorRef}
+							value={editorValue}
+							onChange={() => {
+								onChange(codeEditorRef.current?.value!);
+							}}
+							language="js"
+							style={{
+								fontSize: 23,
+								fontFamily: "Righteous, cursive",
+								overflowY: "scroll",
+							}}
+						/>
+						<button className="rstBtn" onClick={() => onChange(codeBlock?.initialCode!)}>
+							<FcRefresh />
+						</button>
+					</>
+				)}
+			</div>
 		</div>
 	);
 };

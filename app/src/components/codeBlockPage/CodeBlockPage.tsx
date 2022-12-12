@@ -24,6 +24,7 @@ const CodeBlockPage = () => {
 
 	return (
 		<div className="CodeBlockPage">
+			<h1 className="title">{title?.replace("_", " ")}</h1>
 			{!isFirst ? <CodeBlockEditor title={title!} /> : <CodeBlockMentor title={title!} />}
 			<h1 className="spectators">spectators: {spectators}</h1>
 		</div>
