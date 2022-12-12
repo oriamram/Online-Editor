@@ -7,7 +7,7 @@ const { io } = require("./socket");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: ["http://localhost:4545", "http://app:3000"] }));
 app.use(json());
 
 app.get("/", async (req, res) => {

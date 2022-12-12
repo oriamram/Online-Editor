@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const io = require("socket.io")(4545, {
 	cors: {
-		origin: "*",
+		origin: "http://localhost:3000",
 	},
 });
 
@@ -29,7 +29,7 @@ io.on("connection", (socket) => {
 	//when user changes the editor content
 	socket.on("changeInEditor", async (title, editorValue) => {
 		const room = title;
-		await axios.put("http://localhost:4000/update_codeBlock", { title, changedCode: editorValue });
+		await axios.put("http://server:4000/update_codeBlock", { title, changedCode: editorValue });
 		socket.to(room).emit("changedCode", editorValue);
 	});
 

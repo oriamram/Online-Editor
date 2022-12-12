@@ -11,17 +11,3 @@ services:
     ports:
       - 4000:4000
       - 4545:4545
-    # depends_on:
-    #   - mongo
-  # mongo:
-  #   image: mongo
-  #   ports:
-  #     - 27017:27017
-  # mongo-express:
-  #   image: mongo-express
-  #   ports:
-  #     - 8081:8081
-  #   environment:
-  #     - ME_CONFIG_MONGODB_SERVER=mongo
-  #   depends_on:
-  #     - mongo
