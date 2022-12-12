@@ -11,11 +11,11 @@ interface codeBlockType {
 	changedCode: string;
 }
 
-interface codeBlockEditor {
+interface codeBlockEditorProps {
 	title: string;
 }
 
-const CodeBlockEditor = ({ title }: codeBlockEditor) => {
+const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 	const [codeBlock, setCodeBlock] = useState<codeBlockType>();
 	const [editorValue, setEditorValue] = useState<string | undefined>();
 	const socket = useContext(socketContext);

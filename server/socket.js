@@ -1,4 +1,3 @@
-const db = require("./databaseManager/dbManager");
 const axios = require("axios");
 const io = require("socket.io")(4545, {
 	cors: {
@@ -6,22 +5,35 @@ const io = require("socket.io")(4545, {
 	},
 });
 
-let codeBlocksUses = {};
-
-(async function addCodeBlocks() {
-	(await db.getAllCodeBlocks()).forEach((codeBlock) => (codeBlocksUses[codeBlock.title] = 0));
-})();
+let users = {};
 
 io.on("connection", (socket) => {
-	console.log(socket.id);
+	const socketId = socket.id;
+	console.log(socketId + " - connected");
+	users[socketId] = "";
 	socket.on("connectedToCodeBlock", (title) => {
-		codeBlocksUses[title] += 1;
+		users[socketId] = title;
+		socket.join(title);
+		countSpectators(io, users, title);
 	});
 	socket.on("backAtHome", (lastCodeBlock) => {
-		codeBlocksUses[lastCodeBlock] -= 1;
+		const room = lastCodeBlock;
+		users[socketId] = "home";
+		socket.leave(room);
+		countSpectators(socket, users, lastCodeBlock);
 	});
 	socket.on("changeInEditor", async (title, editorValue) => {
+		const room = title;
 		await axios.put("http://localhost:4000/update_codeBlock", { title, changedCode: editorValue });
-		socket.broadcast.emit("changedCode", editorValue);
+		socket.to(room).emit("changedCode", editorValue);
+	});
+	socket.on("disconnect", () => {
+		const lastCodeBlockOfRemovedSocket = users[socketId];
+		delete users[socketId];
+		countSpectators(socket, users, lastCodeBlockOfRemovedSocket);
 	});
 });
+
+function countSpectators(io, users, room) {
+	io.to(room).emit("spectatorsCount", Object.values(users).filter((currentRoom) => currentRoom === room).length);
+}
