@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const io = require("socket.io")(4545, {
 	cors: {
-		origin: "http://localhost:3000",
+		origin: "*",
 	},
 });
 
