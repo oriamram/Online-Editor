@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import axios from "axios";
+import { FcRefresh } from "react-icons/fc";
 import { socketContext } from "../App";
 import "./styles/codeBlockEditor.scss";
 
@@ -19,6 +20,7 @@ const CodeBlockEditor = ({ title }: codeBlockEditor) => {
 	const [editorValue, setEditorValue] = useState<string | undefined>();
 	const socket = useContext(socketContext);
 	const codeEditorRef = useRef<HTMLTextAreaElement>(null);
+
 	//request the relevant code block from server
 	const getRelevantCodeBlock = async () => {
 		setCodeBlock(
@@ -43,9 +45,9 @@ const CodeBlockEditor = ({ title }: codeBlockEditor) => {
 		setEditorValue(codeBlock ? codeBlock.changedCode : "!$loadingState");
 	}, [codeBlock]);
 
-	const onChange = () => {
-		setEditorValue(codeEditorRef.current?.value);
-		socket.emit("changeInEditor", title, codeEditorRef.current?.value);
+	const onChange = (value: string) => {
+		setEditorValue(value);
+		socket.emit("changeInEditor", title, value);
 	};
 
 	return (
@@ -53,19 +55,24 @@ const CodeBlockEditor = ({ title }: codeBlockEditor) => {
 			{editorValue === "!$loadingState" ? (
 				<div className="loader"></div>
 			) : (
-				<CodeEditor
-					ref={codeEditorRef}
-					value={editorValue}
-					onChange={() => {
-						onChange();
-					}}
-					language="js"
-					style={{
-						fontSize: 23,
-						fontFamily: "Righteous, cursive",
-						overflowY: "scroll",
-					}}
-				/>
+				<>
+					<CodeEditor
+						ref={codeEditorRef}
+						value={editorValue}
+						onChange={() => {
+							onChange(codeEditorRef.current?.value!);
+						}}
+						language="js"
+						style={{
+							fontSize: 23,
+							fontFamily: "Righteous, cursive",
+							overflowY: "scroll",
+						}}
+					/>
+					<button className="rstBtn" onClick={() => onChange(codeBlock?.initialCode!)}>
+						<FcRefresh />
+					</button>
+				</>
 			)}
 		</div>
 	);

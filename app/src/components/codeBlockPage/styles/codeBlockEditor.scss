@@ -2,15 +2,38 @@
 
 .w-tc-editor {
 	@include size(70vw, 80vh);
+	min-width: 250px;
+	min-height: 600px;
 	background: $editor-theme;
+	border-top: 3px black solid;
 }
+
+.rstBtn {
+	@include size(2vw, 3vh);
+	display: flex;
+	margin-left: 2%;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	font-size: 6rem;
+	background: $bg-theme;
+	&:hover {
+		cursor: pointer;
+	}
+}
+
 .CodeBlockEditor {
-	padding: 15px;
+	@include size(75vw, 83vh);
+	display: flex;
+	position: relative;
+	min-width: 300px;
+	min-height: 620px;
+	align-items: center;
+	padding-left: 0.5vw;
 	background: $editor-theme;
 }
 
 .keyword {
-	// color: rgb(0, 172, 0) !important;
 	color: rgb(116, 0, 0) !important;
 }
 .punctuation {
@@ -33,4 +56,32 @@
 }
 .boolean {
 	color: rgb(197, 128, 0) !important;
+}
+
+@media only screen and (max-width: 1400px) {
+	.rstBtn {
+		@include size(30px, 30px);
+	}
+}
+@media only screen and (max-width: 1200px) {
+	.rstBtn {
+		margin-left: 1.5%;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	.rstBtn {
+		margin-left: 3%;
+	}
+	.CodeBlockEditor {
+		@include size(90vw, 95vh);
+	}
+	.w-tc-editor {
+		@include size(80vw, 87vh);
+	}
+}
+@media only screen and (max-width: 500px) {
+	.rstBtn {
+		margin-left: 1%;
+	}
 }
