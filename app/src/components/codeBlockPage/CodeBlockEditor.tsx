@@ -28,7 +28,7 @@ const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 	const getRelevantCodeBlock = async () => {
 		setCodeBlock(
 			(
-				await axios.get("/get_codeBlock", {
+				await axios.get("/codeBlock", {
 					params: {
 						title,
 					},
@@ -43,6 +43,9 @@ const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 		socket.on("changedCode", (changedCode) => {
 			setEditorValue(changedCode);
 		});
+		return () => {
+			socket.off("changedCode");
+		};
 	}, []);
 
 	useEffect(() => {

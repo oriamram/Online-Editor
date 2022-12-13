@@ -5,16 +5,16 @@ import CodeBlockOption from "../codeBlockOption/CodeBlockOption";
 import "./styles/homePage.scss";
 
 const HomePage = () => {
-	const [allCodeBlocks, setAllCodeBlocks] = useState([]);
+	const [codeBlocks, setCodeBlocks] = useState([]);
 	const socket = useContext(socketContext);
 
 	const getAllCodeBlocks = async () => {
-		setAllCodeBlocks(await (await axios.get("/get_all_codeBlocks")).data);
+		setCodeBlocks(await (await axios.get("/codeBlock/all")).data);
 	};
 
 	//render all codeBlocks options
 	const renderCodeBlockOptions = () => {
-		return allCodeBlocks.map(({ title }: { title: string }) => <CodeBlockOption key={title} title={title} />);
+		return codeBlocks.map(({ title }: { title: string }) => <CodeBlockOption key={title} title={title} />);
 	};
 
 	useEffect(() => {
@@ -25,7 +25,7 @@ const HomePage = () => {
 	return (
 		<div className="HomePage">
 			<h1 className="web-title">Choose Code Block</h1>
-			{allCodeBlocks.length >= 1 ? <div className="codeBlocks-container">{renderCodeBlockOptions()}</div> : <div className="loader"></div>}
+			{codeBlocks.length >= 1 ? <div className="codeBlocks-container">{renderCodeBlockOptions()}</div> : <div className="loader"></div>}
 		</div>
 	);
 };

@@ -3,20 +3,19 @@ const { json } = require("body-parser");
 const cors = require("cors");
 const db = require("./databaseManager/dbManager");
 const path = require("path");
-const http = require("http");
 const axios = require("axios");
+const http = require("http");
 const { Server } = require("socket.io");
 
 const app = express();
-const PORT = process.env.PORT || 4000;
 const server = http.createServer(app);
+const PORT = process.env.PORT || 4000;
 
 ///////////////////////////////////////////////////////////////////////// socket
 
 const io = new Server(server, {
 	cors: {
 		origin: "*",
-		methods: "*",
 	},
 });
 
@@ -59,16 +58,12 @@ function countSpectators(io, users, room) {
 	io.to(room).emit("spectatorsCount", Object.values(users).filter((currentRoom) => currentRoom === room).length);
 }
 
-///////////////////////////////////////////////////////////////////////////// server
+///////////////////////////////////////////////////////////////////////////// server >>>
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "*" }));
 app.use(json());
 
 app.use(express.static(path.join(__dirname + "/public")));
-
-// app.get("/", async (req, res) => {
-// 	res.send("server");
-// });
 
 //response with relevant codeBlock object
 app.get("/get_codeBlock", async (req, res) => {
@@ -90,10 +85,6 @@ app.post("/add_codeBlock", async (req, res) => {
 app.put("/update_codeBlock", async (req, res) => {
 	res.sendStatus(await db.updateCodeBlock(req.body.title, req.body.changedCode));
 });
-
-// app.listen(PORT, () => {
-// 	console.log("server is running");
-// });
 
 server.listen(PORT, () => {
 	console.log("server online");

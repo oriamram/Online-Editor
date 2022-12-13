@@ -1,21 +1,18 @@
 const express = require("express");
 const { json } = require("body-parser");
 const cors = require("cors");
-const db = require("./databaseManager/dbManager");
 const axios = require("axios");
 const http = require("http");
 const { Server } = require("socket.io");
-// const { io } = require("./socket");
+const { codeBlockRouter } = require("./routes/codeBlocks");
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 4000;
 
-///////////////////////////////////////////////////////////////////////// socket
-
+//socket section
 const io = new Server(server, {
 	cors: {
 		origin: "*",
-		methods: "*",
 	},
 });
 
@@ -42,7 +39,7 @@ io.on("connection", (socket) => {
 	//when user changes the editor content
 	socket.on("changeInEditor", async (title, editorValue) => {
 		const room = title;
-		await axios.put("http://localhost:4000/update_codeBlock", { title, changedCode: editorValue });
+		await axios.put("http://localhost:4000/codeBlock", { title, changedCode: editorValue });
 		socket.to(room).emit("changedCode", editorValue);
 	});
 
@@ -58,41 +55,11 @@ function countSpectators(io, users, room) {
 	io.to(room).emit("spectatorsCount", Object.values(users).filter((currentRoom) => currentRoom === room).length);
 }
 
-///////////////////////////////////////////////////////////////////////////// server
-
-app.use(cors({ origin: "http://app:3000" }));
+// server section
+app.use(cors({ origin: "*" }));
 app.use(json());
-
 // app.use(express.static(__dirname));
-
-app.get("/", async (req, res) => {
-	res.send("server");
-});
-
-//response with relevant codeBlock object
-app.get("/get_codeBlock", async (req, res) => {
-	res.send(await db.getCodeBlock(req.query.title));
-});
-
-//response with all codeBlock objects
-app.get("/get_all_codeBlocks", async (req, res) => {
-	res.send(await db.getAllCodeBlocks());
-});
-
-//add codeBlock to database
-app.post("/add_codeBlock", async (req, res) => {
-	await db.addCodeBlock({ title: req.body.title, initialCode: req.body.initialCode, solutionCode: req.body.solutionCode });
-	res.sendStatus(204);
-});
-
-//update a codeBlock's changedBody
-app.put("/update_codeBlock", async (req, res) => {
-	res.sendStatus(await db.updateCodeBlock(req.body.title, req.body.changedCode));
-});
-
-// app.listen(PORT, () => {
-// 	console.log("server is running");
-// });
+app.use("/codeBlock", codeBlockRouter);
 
 server.listen(PORT, () => {
 	console.log("server online");

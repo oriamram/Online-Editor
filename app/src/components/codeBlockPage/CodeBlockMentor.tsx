@@ -18,7 +18,6 @@ interface codeBlockMentorProps {
 const CodeBlockMentor = ({ title }: codeBlockMentorProps) => {
 	const [codeBlock, setCodeBlock] = useState<codeBlockType>();
 	const [displayValue, setDisplayValue] = useState<string>();
-	// const [correctSolution, setCorrectSolution] = useState<boolean>(false);
 	const socket = useContext(socketContext);
 
 	//highlight.js
@@ -49,7 +48,7 @@ const CodeBlockMentor = ({ title }: codeBlockMentorProps) => {
 	const getRelevantCodeBlock = async () => {
 		setCodeBlock(
 			(
-				await axios.get("/get_codeBlock", {
+				await axios.get("/codeBlock", {
 					params: {
 						title,
 					},
