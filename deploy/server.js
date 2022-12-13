@@ -12,9 +12,9 @@ app.use(json());
 
 app.use(express.static(__dirname + "./build"));
 
-app.get("/", async (req, res) => {
-	res.send("server");
-});
+// app.get("/", async (req, res) => {
+// 	res.send("server");
+// });
 
 //response with relevant codeBlock object
 app.get("/get_codeBlock", async (req, res) => {

@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { io } from "socket.io-client";
 import "../main.scss";
 
-const socket = io("http://localhost:4545");
+const socket = io("http://localhost:4000");
 
 export const socketContext = React.createContext(socket);
 const App = () => {
