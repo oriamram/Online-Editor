@@ -2,10 +2,10 @@ const express = require("express");
 const { json } = require("body-parser");
 const cors = require("cors");
 const db = require("./databaseManager/dbManager");
-// const { io } = require("./socket");
+const axios = require("axios");
 const http = require("http");
 const { Server } = require("socket.io");
-
+// const { io } = require("./socket");
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 4000;
@@ -60,8 +60,10 @@ function countSpectators(io, users, room) {
 
 ///////////////////////////////////////////////////////////////////////////// server
 
-app.use(cors({ origin: ["http://localhost:4545", "http://app:3000"] }));
+app.use(cors({ origin: "http://app:3000" }));
 app.use(json());
+
+// app.use(express.static(__dirname));
 
 app.get("/", async (req, res) => {
 	res.send("server");
