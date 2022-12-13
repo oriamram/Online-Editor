@@ -9,17 +9,36 @@
 	color: #9cdcfe;
 }
 
-.rstBtn {
-	@include size(2vw, 3vh);
-	display: flex;
+.btns {
 	margin-left: 2%;
-	justify-content: center;
-	align-items: center;
-	border: none;
-	font-size: 6rem;
-	background: $bg-theme;
-	&:hover {
-		cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	height: 100%;
+	.rstBtn {
+		@include size(40px, 40px);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: none;
+		font-size: 6rem;
+		background: $bg-theme;
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	.solutionBtn {
+		@include size(40px, 40px);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: none;
+		background: $bg-theme;
+		color: #1565c0;
+		font-size: 6rem;
+		&:hover {
+			cursor: pointer;
+		}
 	}
 }
 
@@ -80,23 +99,30 @@
 }
 
 @media only screen and (max-width: 1400px) {
-	.rstBtn {
-		@include size(30px, 30px);
+	.btns {
+		margin-left: 1.5%;
+		.rstBtn,
+		.solutionBtn {
+			@include size(35px, 35px);
+		}
 	}
 }
-@media only screen and (max-width: 1200px) {
-	.rstBtn {
-		margin-left: 1.5%;
+@media only screen and (max-width: 1100px) {
+	.btns {
+		margin-left: 1%;
+		.rstBtn,
+		.solutionBtn {
+			@include size(30px, 30px);
+		}
 	}
 }
 
-@media only screen and (max-width: 900px) {
-	.rstBtn {
-		margin-left: 3%;
+@media only screen and (max-width: 700px) {
+	.btns {
+		margin-left: 2%;
 	}
 	.CodeBlockEditor {
 		@include size(90vw, 90vh);
-		overflow-x: hidden;
 	}
 	.w-tc-editor {
 		@include size(80vw, 87vh);
@@ -105,10 +131,5 @@
 	.smiley {
 		@include size(80vw, 87vh);
 		font-size: 15rem;
-	}
-}
-@media only screen and (max-width: 500px) {
-	.rstBtn {
-		margin-left: 1%;
 	}
 }

@@ -3,7 +3,7 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import axios from "axios";
 import { socketContext } from "../App";
 import { FcRefresh } from "react-icons/fc";
-import { AiOutlineSmile } from "react-icons/ai";
+import { AiOutlineSmile, AiOutlineQuestionCircle } from "react-icons/ai";
 import "./styles/codeBlockEditor.scss";
 
 interface codeBlockType {
@@ -55,6 +55,15 @@ const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 		socket.emit("changeInEditor", title, value);
 	};
 
+	const showSolution = () => {
+		setEditorValue(
+			editorValue +
+				`
+//////////////////////////////////////////// to answer correctly remove from here all the way down
+${codeBlock?.solutionCode.slice(codeBlock?.solutionCode.indexOf("let") - 1)}`
+		);
+	};
+
 	//check for currect answer
 	useEffect(() => {
 		if (editorValue && editorValue === codeBlock?.solutionCode) {
@@ -88,15 +97,25 @@ const CodeBlockEditor = ({ title }: codeBlockEditorProps) => {
 								}}
 							/>
 						)}
-						<button
-							className="rstBtn"
-							onClick={() => {
-								setCorrectSolution(false);
-								onChange(codeBlock?.initialCode!);
-							}}
-						>
-							<FcRefresh />
-						</button>
+						<div className="btns">
+							<button
+								className="solutionBtn"
+								onClick={() => {
+									showSolution();
+								}}
+							>
+								<AiOutlineQuestionCircle />
+							</button>
+							<button
+								className="rstBtn"
+								onClick={() => {
+									setCorrectSolution(false);
+									onChange(codeBlock?.initialCode!);
+								}}
+							>
+								<FcRefresh />
+							</button>
+						</div>
 					</>
 				)}
 			</div>

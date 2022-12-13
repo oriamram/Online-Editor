@@ -21,6 +21,11 @@ const CodeBlockPage = () => {
 			}
 		});
 		localStorage.setItem("lastCodeBlock", title!);
+		alert(`Rules are:
+- Tab equal 4 spaces.
+- The code must be same as the solution code for you to answer currectly (be aware to invisible spaces).
+** You can see the solution code and reset the code anytime .
+`);
 	}, []);
 
 	return (
